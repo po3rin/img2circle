@@ -1,0 +1,13 @@
+builds:
+  - main: cmd/img2circleci/main.go
+    binary: gotree
+    goos:
+      - windows
+      - darwin
+      - linux
+    goarch:
+      - amd64
+release:
+  github:
+    owner: po3rin
+    name: img2circleci
