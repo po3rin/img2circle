@@ -1,6 +1,6 @@
 builds:
   - main: cmd/img2circleci/main.go
-    binary: gotree
+    binary: img2circleci
     goos:
       - windows
       - darwin
