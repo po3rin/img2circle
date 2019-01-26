@@ -1,6 +1,6 @@
 builds:
-  - main: cmd/img2circleci/main.go
-    binary: img2circleci
+  - main: cmd/img2circle/main.go
+    binary: img2circle
     goos:
       - windows
       - darwin
@@ -10,4 +10,4 @@ builds:
 release:
   github:
     owner: po3rin
-    name: img2circleci
+    name: img2circle
