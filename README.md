@@ -34,13 +34,37 @@ import (
 )
 
 func main(){
-    c, _ := img2circle.NewCroper(img2circle.Params{
-		ImgPath: "testdata/gopher.jpeg",
-	})
-    result := c.CropCircle()
-    file, _ := os.Create(*output)
+    // opens image file.
+    img, err := os.Open(*imgPath)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer img.Close()
+
+    // decodes image.
+	src, _, err := image.Decode(img)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+    // init croper.
+	c, err := img2circle.NewCroper(img2circle.Params{Src: src})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+    // crop image.
+	result := c.CropCircle()
+	file, err := os.Create(*output)
+	if err != nil {
+		log.Fatal(err)
+	}
 	defer file.Close()
 
-	_ = png.Encode(file, result)
+    // Encodes image.
+	err = png.Encode(file, result)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 ```
