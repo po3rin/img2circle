@@ -31,7 +31,7 @@ func main() {
 	}
 	defer file.Close()
 
-	_ = png.Encode(file, result)
+	err = png.Encode(file, result)
 	if err != nil {
 		log.Fatal(err)
 	}
