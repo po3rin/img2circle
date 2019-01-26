@@ -8,8 +8,8 @@ Package img2circle lets you generate an image cropped a circular image out of a 
 
 ## Installation
 
-```
-$ go get github.com/po3rinimg2circle/cmd/img2circle
+```bash
+$ go get github.com/po3rin/img2circle/cmd/img2circle
 ```
 
 ## Usage
