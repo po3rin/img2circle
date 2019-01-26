@@ -6,14 +6,14 @@ import (
 	"image/draw"
 )
 
-// Croper for crop circle.
-type Croper interface {
+// Cropper for crop circle.
+type Cropper interface {
 	CropCircle() *image.RGBA
 	setDst()
 	setSrc(src image.Image) error
 }
 
-type croper struct {
+type cropper struct {
 	src       image.Image
 	dst       *image.RGBA
 	srcWidth  int
@@ -28,9 +28,9 @@ type Params struct {
 	// PosY    int
 }
 
-// NewCroper init croper from Params
-func NewCroper(params Params) (Croper, error) {
-	d := &croper{}
+// NewCropper init cropper from Params
+func NewCropper(params Params) (Cropper, error) {
+	d := &cropper{}
 	err := d.setSrc(params.Src)
 	if err != nil {
 		return d, err
@@ -39,7 +39,7 @@ func NewCroper(params Params) (Croper, error) {
 	return d, nil
 }
 
-func (c *croper) setSrc(src image.Image) error {
+func (c *cropper) setSrc(src image.Image) error {
 	b := src.Bounds()
 	srcWidth := b.Max.X
 	srcHeight := b.Max.Y
@@ -59,7 +59,7 @@ func (c *croper) setSrc(src image.Image) error {
 	return nil
 }
 
-func (c *croper) setDst() {
+func (c *cropper) setDst() {
 	rect := image.Rect(0, 0, c.srcWidth, c.srcHeight)
 	dst := image.NewRGBA(rect)
 	fillRect(dst, color.RGBA{0, 0, 0, 0})
@@ -67,7 +67,7 @@ func (c *croper) setDst() {
 }
 
 // CropCircle crop a circle image out of image.
-func (c *croper) CropCircle() *image.RGBA {
+func (c *cropper) CropCircle() *image.RGBA {
 	circle := &circle{p: image.Point{c.srcWidth / 2, c.srcHeight / 2}, r: c.radius}
 	dst := c.dst
 

@@ -31,7 +31,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	c, err := img2circle.NewCroper(img2circle.Params{Src: src})
+	c, err := img2circle.NewCropper(img2circle.Params{Src: src})
 	if err != nil {
 		log.Fatal(err)
 	}

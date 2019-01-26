@@ -34,37 +34,18 @@ import (
 )
 
 func main(){
-    // opens image file.
-    img, err := os.Open(*imgPath)
-    if err != nil {
-        log.Fatal(err)
-    }
+    img, _ := os.Open(*imgPath)
     defer img.Close()
+    src, _, _ := image.Decode(img)
 
-    // decodes image.
-    src, _, err := image.Decode(img)
-    if err != nil {
-        log.Fatal(err)
-    }
-
-    // init croper.
-    c, err := img2circle.NewCroper(img2circle.Params{Src: src})
-    if err != nil {
-        log.Fatal(err)
-    }
-
-    // crop image.
+    // use img2circle packege.
+    c, _ := img2circle.NewCropper(img2circle.Params{Src: src})
     result := c.CropCircle()
-    file, err := os.Create(*output)
-    if err != nil {
-        log.Fatal(err)
-    }
+
+    file, _ := os.Create(*output)
     defer file.Close()
 
     // Encodes image.
-    err = png.Encode(file, result)
-    if err != nil {
-        log.Fatal(err)
-    }
+    _ = png.Encode(file, result)
 }
 ```

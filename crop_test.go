@@ -34,10 +34,10 @@ func TestCropCircle(t *testing.T) {
 			log.Fatal(err)
 		}
 
-		croper, err := img2circle.NewCroper(img2circle.Params{Src: src})
+		cropper, err := img2circle.NewCropper(img2circle.Params{Src: src})
 		if err != nil {
 			t.Fatalf("not expected error: %v", err.Error())
 		}
-		_ = croper.CropCircle()
+		_ = cropper.CropCircle()
 	}
 }
