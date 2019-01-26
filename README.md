@@ -42,10 +42,8 @@ func main(){
     c, _ := img2circle.NewCropper(img2circle.Params{Src: src})
     result := c.CropCircle()
 
-    file, _ := os.Create(*output)
+    file, _ := os.Create("cropped.png")
     defer file.Close()
-
-    // Encodes image.
     _ = png.Encode(file, result)
 }
 ```
