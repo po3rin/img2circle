@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"image"
 	_ "image/jpeg"
 	"image/png"
 	"log"
@@ -18,12 +19,23 @@ func main() {
 	if *imgPath == "" {
 		log.Fatal("path flag is required")
 	}
-	c, err := img2circle.NewCroper(img2circle.Params{
-		ImgPath: *imgPath,
-	})
+
+	img, err := os.Open(*imgPath)
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer img.Close()
+
+	src, _, err := image.Decode(img)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	c, err := img2circle.NewCroper(img2circle.Params{Src: src})
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	result := c.CropCircle()
 	file, err := os.Create(*output)
 	if err != nil {

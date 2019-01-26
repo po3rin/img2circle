@@ -4,14 +4,13 @@ import (
 	"image"
 	"image/color"
 	"image/draw"
-	"os"
 )
 
 // Croper for crop circle.
 type Croper interface {
 	CropCircle() *image.RGBA
 	setDst()
-	setSrc(imgPath string) error
+	setSrc(src image.Image) error
 }
 
 type croper struct {
@@ -24,15 +23,15 @@ type croper struct {
 
 // Params is parameters for NewDrawer functio
 type Params struct {
-	ImgPath string
+	Src image.Image
 	// PosX    int
 	// PosY    int
 }
 
-// NewCroper init croper
+// NewCroper init croper from Params
 func NewCroper(params Params) (Croper, error) {
 	d := &croper{}
-	err := d.setSrc(params.ImgPath)
+	err := d.setSrc(params.Src)
 	if err != nil {
 		return d, err
 	}
@@ -40,18 +39,7 @@ func NewCroper(params Params) (Croper, error) {
 	return d, nil
 }
 
-func (c *croper) setSrc(imgPath string) error {
-	img, err := os.Open(imgPath)
-	if err != nil {
-		return err
-	}
-	defer img.Close()
-
-	src, _, err := image.Decode(img)
-	if err != nil {
-		return err
-	}
-
+func (c *croper) setSrc(src image.Image) error {
 	b := src.Bounds()
 	srcWidth := b.Max.X
 	srcHeight := b.Max.Y
