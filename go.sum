@@ -1,0 +1,8 @@
+github.com/docker/docker v1.13.1 h1:IkZjBSIc8hBjLpqeAbeE5mca5mNgeatLHBy3GO78BWo=
+github.com/docker/docker v1.13.1/go.mod h1:eEKB0N0r5NX/I1kEveEz05bcu8tLC/8azJZsviup8Sk=
+github.com/shurcooL/go v0.0.0-20190330031554-6713ea532688 h1:p7kt1rmLjMUkAmuyY/GUZeCoOud+nq297UKCCgEqYmA=
+github.com/shurcooL/go v0.0.0-20190330031554-6713ea532688/go.mod h1:TDJrrUr11Vxrven61rcy3hJMUqaf/CLWYhHNPmT14Lk=
+github.com/shurcooL/go-goon v0.0.0-20170922171312-37c2f522c041 h1:llrF3Fs4018ePo4+G/HV/uQUqEI1HMDjCeOf2V6puPc=
+github.com/shurcooL/go-goon v0.0.0-20170922171312-37c2f522c041/go.mod h1:N5mDOmsrJOB+vfqUK+7DmDyjhSLIIBnXo9lvZJj3MWQ=
+github.com/soniakeys/quant v1.0.0 h1:N1um9ktjbkZVcywBVAAYpZYSHxEfJGzshHCxx/DaI0Y=
+github.com/soniakeys/quant v1.0.0/go.mod h1:HI1k023QuVbD4H8i9YdfZP2munIHU4QpjsImz6Y6zds=
