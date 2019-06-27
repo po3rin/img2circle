@@ -1,3 +1,5 @@
+// +build withoutwasm
+
 package img2circle_test
 
 import (

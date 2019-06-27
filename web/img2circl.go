@@ -1,5 +1,5 @@
-// Package gifanimecreator creates gif animation from picture file
 // +build js,wasm
+
 package main
 
 import (
