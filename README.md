@@ -14,7 +14,7 @@ $ go get github.com/po3rin/img2circle/cmd/img2circle
 
 ## Try this on Web
 
-you enabled to try here !! (developed by Go + Wasm)
+you are enabled to try here !! (developed by Go + Wasm)
 
 https://po3rin.github.io/img2circle/web/
 
