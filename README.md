@@ -12,6 +12,12 @@ Package img2circle lets you generate an image cropped a circular image out of a 
 $ go get github.com/po3rin/img2circle/cmd/img2circle
 ```
 
+## Try this on Web
+
+you enabled to try here !! (developed by Go + Wasm)
+
+https://po3rin.github.io/img2circle/web/
+
 ## Usage
 
 as CLI tool.
