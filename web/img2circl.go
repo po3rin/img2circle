@@ -16,7 +16,7 @@ import (
 	"github.com/po3rin/img2circle"
 )
 
-type GifAnimeCreator struct {
+type Cropper struct {
 	inBuf                  []uint8
 	outBuf                 bytes.Buffer
 	onImgLoadCb, initMemCb js.Func
@@ -26,31 +26,31 @@ type GifAnimeCreator struct {
 	done    chan struct{}
 }
 
-func New() *GifAnimeCreator {
-	return &GifAnimeCreator{
+func New() *Cropper {
+	return &Cropper{
 		console: js.Global().Get("console"),
 		done:    make(chan struct{}),
 	}
 }
 
-func (g *GifAnimeCreator) Start() {
+func (c *Cropper) Start() {
 	// Setup functions
-	g.setupInitMemCb()
-	js.Global().Set("initMem", g.initMemCb)
+	c.setupInitMemCb()
+	js.Global().Set("initMem", c.initMemCb)
 
-	g.setupOnImgLoadCb()
-	js.Global().Set("loadImage", g.onImgLoadCb)
+	c.setupOnImgLoadCb()
+	js.Global().Set("loadImage", c.onImgLoadCb)
 
-	<-g.done
-	g.log("Shutting down app")
-	g.onImgLoadCb.Release()
+	<-c.done
+	c.log("Shutting down app")
+	c.onImgLoadCb.Release()
 }
 
-func (g *GifAnimeCreator) ConvertImage(argStartFlag string, argEndFlag string, argLoopFlag string) {
+func (c *Cropper) ConvertImage(argStartFlag string, argEndFlag string, argLoopFlag string) {
 	// sourceImg is already decoded
 
 	// Set image
-	cropper, err := img2circle.NewCropper(img2circle.Params{Src: g.sourceImg})
+	cropper, err := img2circle.NewCropper(img2circle.Params{Src: c.sourceImg})
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -62,26 +62,25 @@ func (g *GifAnimeCreator) ConvertImage(argStartFlag string, argEndFlag string, a
 		return
 	}
 
-	g.outBuf = *buf
+	c.outBuf = *buf
 }
 
 // updateImage writes the image to a byte buffer and then converts it to base64.
 // Then it sets the value to the src attribute of the target image.
-func (g *GifAnimeCreator) updateImage(start time.Time) {
-	g.console.Call("log", "updateImage:", start.String())
-	g.ConvertImage("left", "right", "false")
-	out := g.outBuf.Bytes()
+func (c *Cropper) updateImage(start time.Time) {
+	c.console.Call("log", "updateImage:", start.String())
+	c.ConvertImage("left", "right", "false")
+	out := c.outBuf.Bytes()
 	hdr := (*reflect.SliceHeader)(unsafe.Pointer(&out))
 	ptr := uintptr(unsafe.Pointer(hdr.Data))
 	// set pointer and length to JS function
-	// 画像がセットされたポインターと画像の長さをJSの関数に渡す
 	js.Global().Call("displayImage", ptr, len(out))
-	g.console.Call("log", "time taken:", time.Now().Sub(start).String())
-	g.outBuf.Reset()
+	c.console.Call("log", "time taken:", time.Now().Sub(start).String())
+	c.outBuf.Reset()
 }
 
 // utility function to log a msg to the UI from inside a callback
-func (s *GifAnimeCreator) log(msg string) {
+func (s *Cropper) log(msg string) {
 	js.Global().Get("document").
 		Call("getElementById", "status").
 		Set("innerText", msg)

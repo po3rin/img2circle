@@ -11,33 +11,33 @@ import (
 	"unsafe"
 )
 
-func (g *GifAnimeCreator) setupOnImgLoadCb() {
-	g.onImgLoadCb = js.FuncOf(func(this js.Value, args []js.Value) interface{} {
-		reader := bytes.NewReader(g.inBuf)
+func (c *Cropper) setupOnImgLoadCb() {
+	c.onImgLoadCb = js.FuncOf(func(this js.Value, args []js.Value) interface{} {
+		reader := bytes.NewReader(c.inBuf)
 		var err error
-		g.sourceImg, err = png.Decode(reader)
+		c.sourceImg, err = png.Decode(reader)
 		if err != nil {
-			g.log(err.Error())
+			c.log(err.Error())
 			return nil
 		}
-		g.log("Ready for operations")
+		c.log("Ready for operations")
 		start := time.Now()
-		g.updateImage(start)
+		c.updateImage(start)
 		return nil
 	})
 }
 
-func (g *GifAnimeCreator) setupInitMemCb() {
+func (c *Cropper) setupInitMemCb() {
 	// The length of the image array buffer is passed.
 	// Then the buf slice is initialized to that length.
 	// And a pointer to that slice is passed back to the browser
-	g.initMemCb = js.FuncOf(func(this js.Value, i []js.Value) interface{} {
+	c.initMemCb = js.FuncOf(func(this js.Value, i []js.Value) interface{} {
 		length := i[0].Int()
-		g.console.Call("log", "length:", length)
+		c.console.Call("log", "length:", length)
 		// make buffer by image length
 		// 画像サイズ分のバッファを作成する
-		g.inBuf = make([]uint8, length)
-		hdr := (*reflect.SliceHeader)(unsafe.Pointer(&g.inBuf))
+		c.inBuf = make([]uint8, length)
+		hdr := (*reflect.SliceHeader)(unsafe.Pointer(&c.inBuf))
 		ptr := uintptr(unsafe.Pointer(hdr.Data))
 		// pass pointer to JS by calling function
 		// JS側の関数の引数にポインターをセットして渡す
